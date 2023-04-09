@@ -1,15 +1,30 @@
 import { Box, useMediaQuery } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import NavbarPage from 'pages/navbar/NavbarPage';
 import UserWidget from 'pages/widgets/UserWidget';
 import MyPostWidget from 'pages/widgets/MyPostWidget';
 import PostsWidget from 'pages/widgets/PostsWidget';
 import AdvertWidget from 'pages/widgets/AdvertWidget';
 import FriendListWidget from 'pages/widgets/FriendListWidget';
+import { setPostDeleted } from 'state';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const HomePage = () => {
+  const dispatch = useDispatch();
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
   const { _id, picturePath } = useSelector((state) => state.user);
+  const postDeleted = useSelector((state) => state.postDeleted);
+
+  const notify = () => toast('Post deleted successfully');
+
+  useEffect(() => {
+    if (postDeleted) {
+      notify();
+      dispatch(setPostDeleted(false));
+    }
+  }, [postDeleted]);
 
   return (
     <Box>
@@ -27,7 +42,7 @@ const HomePage = () => {
           flexBasis={isNonMobileScreens ? '42%' : undefined}
           mt={isNonMobileScreens ? undefined : '2rem'}>
           <MyPostWidget picturePath={picturePath} />
-          <PostsWidget userId={_id} />
+          <PostsWidget type={'home'} userId={_id} />
         </Box>
         {isNonMobileScreens && (
           <Box flexBasis='26%'>
@@ -37,6 +52,7 @@ const HomePage = () => {
           </Box>
         )}
       </Box>
+      <ToastContainer />
     </Box>
   );
 };

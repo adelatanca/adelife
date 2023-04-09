@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPosts } from 'state';
+import { setPosts, setUserPosts } from 'state';
 import PostWidget from './PostWidget';
 
-const PostsWidget = ({ userId, isProfile = false }) => {
+const PostsWidget = ({ type, userId, isProfile = false }) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
+  const userPosts = useSelector((state) => state.userPosts);
   const token = useSelector((state) => state.token);
 
   const getPosts = async () => {
@@ -26,7 +27,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       }
     );
     const data = await response.json();
-    dispatch(setPosts({ posts: data }));
+    dispatch(setUserPosts({ userPosts: data }));
   };
 
   useEffect(() => {
@@ -40,33 +41,69 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   return (
     <>
       {posts &&
-        posts.map(
-          ({
-            _id,
-            userId,
-            firstName,
-            lastName,
-            description,
-            location,
-            picturePath,
-            userPicturePath,
-            likes,
-            comments,
-          }) => (
-            <PostWidget
-              key={_id}
-              postId={_id}
-              postUserId={userId}
-              name={`${firstName} ${lastName}`}
-              description={description}
-              location={location}
-              picturePath={picturePath}
-              userPicturePath={userPicturePath}
-              likes={likes}
-              comments={comments}
-            />
-          )
-        )}
+        type === 'home' &&
+        posts
+          .slice(0)
+          .reverse()
+          .map(
+            ({
+              _id,
+              userId,
+              firstName,
+              lastName,
+              description,
+              location,
+              picturePath,
+              userPicturePath,
+              likes,
+              comments,
+            }) => (
+              <PostWidget
+                key={_id}
+                postId={_id}
+                postUserId={userId}
+                name={`${firstName} ${lastName}`}
+                description={description}
+                location={location}
+                picturePath={picturePath}
+                userPicturePath={userPicturePath}
+                likes={likes}
+                comments={comments}
+              />
+            )
+          )}
+      {posts &&
+        type === 'profile' &&
+        userPosts
+          .slice(0)
+          .reverse()
+          .map(
+            ({
+              _id,
+              userId,
+              firstName,
+              lastName,
+              description,
+              location,
+              picturePath,
+              userPicturePath,
+              likes,
+              comments,
+            }) => (
+              <PostWidget
+                key={_id}
+                postId={_id}
+                postUserId={userId}
+                name={`${firstName} ${lastName}`}
+                description={description}
+                location={location}
+                picturePath={picturePath}
+                userPicturePath={userPicturePath}
+                likes={likes}
+                comments={comments}
+              />
+            )
+          )}
     </>
   );
 };

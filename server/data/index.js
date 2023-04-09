@@ -37,7 +37,7 @@ export const users = [
     picturePath: 'p3.jpg',
     friends: [userIds[0]],
     location: 'New York, CA',
-    occupation: 'Degenerate',
+    occupation: 'Backend developer',
     viewedProfile: 12351,
     impressions: 55555,
     createdAt: 1595589072,
@@ -149,7 +149,7 @@ export const posts = [
     firstName: 'Steve',
     lastName: 'Ralph',
     location: 'New York, CA',
-    description: 'Some really long random description',
+    description: `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
     picturePath: 'post1.jpg',
     userPicturePath: 'p3.jpg',
     likes: new Map([
@@ -170,8 +170,7 @@ export const posts = [
     firstName: 'Whatcha',
     lastName: 'Doing',
     location: 'Korea, CA',
-    description:
-      'Another really long random description. This one is longer than the previous one.',
+    description: `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
     picturePath: 'post2.jpg',
     userPicturePath: 'p6.jpg',
     likes: new Map([
@@ -193,8 +192,7 @@ export const posts = [
     firstName: 'Jane',
     lastName: 'Doe',
     location: 'Utah, CA',
-    description:
-      'This is the last really long random description. This one is longer than the previous one.',
+    description: `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
     picturePath: 'post3.jpg',
     userPicturePath: 'p5.jpg',
     likes: new Map([
@@ -217,8 +215,7 @@ export const posts = [
     firstName: 'Harvey',
     lastName: 'Dunn',
     location: 'Los Angeles, CA',
-    description:
-      "This is the last really long random description. This one is longer than the previous one. Man I'm bored. I'm going to keep typing until I run out of things to say.",
+    description: `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
     picturePath: 'post4.jpg',
     userPicturePath: 'p7.jpg',
     likes: new Map([
@@ -265,8 +262,7 @@ export const posts = [
     firstName: 'Jessica',
     lastName: 'Dunn',
     location: 'Washington, DC',
-    description:
-      "For the last time, I'm going to play video games now. I'm tired of typing. I'm going to play video games now.",
+    description: `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
     picturePath: 'post6.jpg',
     userPicturePath: 'p9.jpg',
     likes: new Map([

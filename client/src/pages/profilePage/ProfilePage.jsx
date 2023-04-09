@@ -1,19 +1,33 @@
 import { Box, useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import NavbarPage from 'pages/navbar/NavbarPage';
 import FriendListWidget from 'pages/widgets/FriendListWidget';
 import MyPostWidget from 'pages/widgets/MyPostWidget';
 import PostsWidget from 'pages/widgets/PostsWidget';
 import UserWidget from 'pages/widgets/UserWidget';
+import { setPostDeleted } from 'state';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const { userId } = useParams();
   const token = useSelector((state) => state.token);
+  const postDeleted = useSelector((state) => state.postDeleted);
   const loggedUserPicture = useSelector((state) => state.user.picturePath);
   const isNonMobileScreens = useMediaQuery('(min-width:1000px)');
+
+  const notify = () => toast('Post deleted successfully');
+
+  useEffect(() => {
+    if (postDeleted) {
+      notify();
+      dispatch(setPostDeleted(false));
+    }
+  }, [postDeleted]);
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:3001/users/${userId}`, {
@@ -49,9 +63,10 @@ const ProfilePage = () => {
           mt={isNonMobileScreens ? undefined : '2rem'}>
           <MyPostWidget picturePath={loggedUserPicture} />
           <Box m='2rem 0' />
-          <PostsWidget userId={userId} isProfile />
+          <PostsWidget type={'profile'} userId={userId} isProfile />
         </Box>
       </Box>
+      <ToastContainer />
     </Box>
   );
 };
