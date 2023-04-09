@@ -10,7 +10,7 @@ import Friend from 'components/Friend';
 import WidgetWrapper from 'components/WidgetWrapper';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPost, setPosts, setPostDeleted } from 'state';
+import { setPost, setUserPosts, setPosts, setPostDeleted } from 'state';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const PostWidget = ({
@@ -28,8 +28,11 @@ const PostWidget = ({
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
-  const isLiked = Boolean(likes[loggedInUserId]);
-  const likeCount = Object.keys(likes).length;
+  const post = useSelector((state) =>
+    state.posts.find((post) => post._id === postId)
+  );
+  const isLiked = Boolean(post.likes[loggedInUserId]);
+  const likeCount = Object.keys(post.likes).length;
   const { _id } = useSelector((state) => state.user);
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -62,9 +65,10 @@ const PostWidget = ({
         body: JSON.stringify({ userId: loggedInUserId }),
       }
     );
-    const data = await response.json();
-    if (data) {
-      dispatch(setPosts({ posts: data }));
+    const { updatedUserPosts, allPosts } = await response.json();
+    if (updatedUserPosts && allPosts) {
+      dispatch(setUserPosts({ userPosts: updatedUserPosts }));
+      dispatch(setPosts({ posts: allPosts }));
       dispatch(setPostDeleted(true));
     }
   };

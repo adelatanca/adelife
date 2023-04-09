@@ -47,7 +47,7 @@ const initialValuesLogin = {
 };
 
 const Form = () => {
-  const [pageType, setPageType] = useState('login');
+  const [pageType, setPageType] = useState('register');
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -105,6 +105,7 @@ const Form = () => {
   return (
     <Formik
       onSubmit={handleFormSubmit}
+      validateOnMount
       initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
       validationSchema={isLogin ? loginSchema : registerSchema}>
       {({
@@ -133,9 +134,7 @@ const Form = () => {
                   onChange={handleChange}
                   value={values.firstName}
                   name='firstName'
-                  error={
-                    Boolean(touched.firstName) && Boolean(errors.firstName)
-                  }
+                  error={touched.firstName && !!errors.firstName}
                   helperText={touched.firstName && errors.firstName}
                   sx={{ gridColumn: 'span 2' }}
                 />

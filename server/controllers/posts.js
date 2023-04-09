@@ -19,8 +19,10 @@ export const createPost = async (req, res) => {
     });
     await newPost.save();
 
-    const post = await Post.find();
-    res.status(201).json(post);
+    const updatedUserPosts = await Post.find({ userId });
+    const allPosts = await Post.find();
+
+    res.status(201).json({ updatedUserPosts, allPosts });
   } catch (err) {
     res.status(409).json({ message: err.message });
   }
@@ -83,8 +85,9 @@ export const deletePost = async (req, res) => {
       return res.status(404).json({ message: 'Post not found' });
     }
 
-    const updatedPosts = await Post.find({ userId });
-    res.status(200).json(updatedPosts);
+    const updatedUserPosts = await Post.find({ userId });
+    const allPosts = await Post.find();
+    res.status(200).json({ updatedUserPosts, allPosts });
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

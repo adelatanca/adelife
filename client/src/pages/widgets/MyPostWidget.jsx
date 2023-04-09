@@ -23,7 +23,7 @@ import UserImage from 'components/UserImage';
 import WidgetWrapper from 'components/WidgetWrapper';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPosts } from 'state';
+import { setPosts, setUserPosts } from 'state';
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
@@ -51,8 +51,9 @@ const MyPostWidget = ({ picturePath }) => {
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
     });
-    const posts = await response.json();
-    dispatch(setPosts({ posts }));
+    const { updatedUserPosts, allPosts } = await response.json();
+    dispatch(setUserPosts({ userPosts: updatedUserPosts }));
+    dispatch(setPosts({ posts: allPosts }));
     setImage(null);
     setPost('');
   };

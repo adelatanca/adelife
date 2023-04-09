@@ -72,7 +72,7 @@ const PostsWidget = ({ type, userId, isProfile = false }) => {
               />
             )
           )}
-      {posts &&
+      {userPosts &&
         type === 'profile' &&
         userPosts
           .slice(0)
