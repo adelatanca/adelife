@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
-    friend: {
+    friends: {
       type: Array,
       default: [],
     },
@@ -42,5 +42,4 @@ const UserSchema = new mongoose.Schema(
 );
 
 const User = mongoose.model('User', UserSchema);
-
 export default User;

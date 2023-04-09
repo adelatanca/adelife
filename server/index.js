@@ -62,8 +62,8 @@ mongoose
       console.log(`Server is running on port ${PORT}`);
     });
 
-    // User.insertMany(users);
-    // Post.insertMany(posts);
+    User.insertMany(users);
+    Post.insertMany(posts);
   })
   .catch((err) => {
     console.log(err);
